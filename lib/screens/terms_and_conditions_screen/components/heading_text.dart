@@ -10,15 +10,14 @@ class HeadingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 36.0),
+        padding: const EdgeInsets.only(top: 12.0),
         child: Text(
           'Welcome to WhatsApp',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.w600,
-            color: MyColors.lightTealGreen,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(color: MyColors.lightTealGreen),
         ),
       ),
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone_app/my_colors.dart';
+import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/country_dropdown.dart';
+import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/help_popup_menu_button.dart';
+import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/helper_text_widget.dart';
 
 class PhoneNumberInputScreen extends StatelessWidget {
   @override
@@ -7,32 +10,26 @@ class PhoneNumberInputScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.white,
       appBar: AppBar(
-        backgroundColor: MyColors.white,
-        title: Text('Enter your phone number'),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        leading: Container(),
+        title: FittedBox(
+          child: Text(
+            'Enter you phone number',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          )
+          HelpPopupMenuButton(),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              // Center(
-              //   child: Padding(
-              //     padding: EdgeInsets.only(top: 20.00),
-              //     child: Text(
-              //       'Enter your phone number',
-              //       style: TextStyle(
-              //         color: MyColors.lightTealGreen,
-              //         fontSize: 18.0,
-              //         fontWeight: FontWeight.w500,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: 12.0),
+              HelperTextWidget(),
+              CountryDropdown(),
             ],
           ),
         ),

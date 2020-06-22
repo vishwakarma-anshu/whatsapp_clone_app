@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'WhatsApp Clone',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: MyColors.lightGreen,
+        primaryColor: MyColors.lightTealGreen,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: TermsAndConditionsScreen(),
