@@ -17,7 +17,10 @@ class PhoneNumberInputScreen extends StatelessWidget {
         title: FittedBox(
           child: Text(
             'Enter you phone number',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(color: MyColors.lightTealGreen),
           ),
         ),
         actions: <Widget>[

@@ -55,7 +55,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
                     text: 'anshu vishwakarma'.toUpperCase(),
                     style: Theme.of(context).textTheme.bodyText1.copyWith(
                           color: MyColors.lightGreen,
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                           letterSpacing: 2.0,
                           height: 2.0,
                         ),

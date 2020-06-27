@@ -28,8 +28,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
       value: selectedCountry.name,
       items: countriesList,
       onChanged: (String value) {
-        Country _country = Country
-            .ALL[Country.ALL.indexWhere((country) => country.name == value)];
+        Country _country =
+            countries[countries.indexWhere((country) => country.name == value)];
 
         setState(() => selectedCountry = _country);
       },

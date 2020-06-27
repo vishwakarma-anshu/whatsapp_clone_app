@@ -10,7 +10,7 @@ class HelpPopupMenuButton extends StatelessWidget {
     return PopupMenuButton(
       icon: Icon(
         Icons.more_vert,
-        color: Colors.black,
+        color: Colors.black54,
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         const PopupMenuItem(
