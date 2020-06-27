@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/components/countries.dart';
+import 'package:whatsapp_clone_app/models/country.dart';
 
 class CountryDropdown extends StatefulWidget {
   CountryDropdown({
@@ -11,7 +11,7 @@ class CountryDropdown extends StatefulWidget {
 }
 
 class _CountryDropdownState extends State<CountryDropdown> {
-  List<DropdownMenuItem> countries = Country.ALL
+  List<DropdownMenuItem> countriesList = countries
       .map<DropdownMenuItem<String>>((Country country) => DropdownMenuItem(
           value: country.name,
           child: Text(
@@ -26,7 +26,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: selectedCountry.name,
-      items: countries,
+      items: countriesList,
       onChanged: (String value) {
         Country _country = Country
             .ALL[Country.ALL.indexWhere((country) => country.name == value)];

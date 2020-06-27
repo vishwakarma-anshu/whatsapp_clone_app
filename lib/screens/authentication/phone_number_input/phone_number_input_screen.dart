@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
-import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/country_dropdown.dart';
-import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/help_popup_menu_button.dart';
-import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/components/helper_text_widget.dart';
+
+import '../../../my_colors.dart';
+import 'components/country_dropdown.dart';
+import 'components/help_popup_menu_button.dart';
+import 'components/helper_text_widget.dart';
 
 class PhoneNumberInputScreen extends StatelessWidget {
   @override

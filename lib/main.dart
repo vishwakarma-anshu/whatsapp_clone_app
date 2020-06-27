@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
-import 'package:whatsapp_clone_app/screens/terms_and_conditions_screen/terms_and_conditions_screen.dart';
+
+import 'my_colors.dart';
+import 'screens/terms_and_conditions/terms_and_conditions_screen.dart';
 
 void main() {
   runApp(MyApp());

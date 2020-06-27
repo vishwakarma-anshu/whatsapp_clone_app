@@ -35,3 +35,9 @@ class Country {
     US,
   ];
 }
+
+List<Country> countries = <Country>[
+  Country.IN,
+  Country.US,
+  // Country.
+];

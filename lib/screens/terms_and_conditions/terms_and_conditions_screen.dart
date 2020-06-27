@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
-import 'package:whatsapp_clone_app/screens/authentication_screens/phone_number_input/phone_number_input_screen.dart';
-import 'package:whatsapp_clone_app/screens/terms_and_conditions_screen/components/heading_text.dart';
-import 'package:whatsapp_clone_app/screens/terms_and_conditions_screen/components/policy_and_terms_text.dart';
-import 'package:whatsapp_clone_app/screens/terms_and_conditions_screen/components/whatsapp_clone_logo.dart';
+
+import '../../my_colors.dart';
+import '../authentication/phone_number_input/phone_number_input_screen.dart';
+import 'components/heading_text.dart';
+import 'components/policy_and_terms_text.dart';
+import 'components/whatsapp_clone_logo.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
   @override
@@ -23,7 +24,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
               elevation: 3.0,
               color: MyColors.lightGreen,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width / 9.5),
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.16),
                 child: Text(
                   'Agree and continue'.toUpperCase(),
                   style: Theme.of(context)
