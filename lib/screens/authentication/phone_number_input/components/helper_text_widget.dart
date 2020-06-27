@@ -38,12 +38,11 @@ class _HelperTextWidgetState extends State<HelperTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18.0),
+      padding: EdgeInsets.symmetric(horizontal: 19.0),
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
           style: TextStyle(
-            fontSize: 14.0,
             color: Colors.black,
           ),
           text:

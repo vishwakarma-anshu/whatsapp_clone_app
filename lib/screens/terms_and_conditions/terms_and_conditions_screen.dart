@@ -19,28 +19,35 @@ class TermsAndConditionsScreen extends StatelessWidget {
           children: <Widget>[
             HeadingText(),
             WhatsAppCloneLogo(),
-            PolicyAndTermsText(),
-            RaisedButton(
-              elevation: 3.0,
-              color: MyColors.lightGreen,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.16),
-                child: Text(
-                  'Agree and continue'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .button
-                      .copyWith(color: Colors.white, fontSize: 12.0),
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PhoneNumberInputScreen(),
+            Column(
+              children: <Widget>[
+                PolicyAndTermsText(),
+                SizedBox(height: 10.0),
+                RaisedButton(
+                  elevation: 3.0,
+                  color: MyColors.lightGreen,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.16),
+                    child: Text(
+                      'Agree and continue'.toUpperCase(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .copyWith(color: Colors.white, fontSize: 12.0),
+                    ),
                   ),
-                );
-              },
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            PhoneNumberInputScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
             RichText(
               textAlign: TextAlign.center,
