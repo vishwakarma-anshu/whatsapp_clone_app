@@ -34,46 +34,46 @@ class Country {
     name: "Austria",
     isoCode: "AT",
     dialingCode: "43",
-    flagSrc: "assets/flags/at_flag.png",
+    flagSrc: "assets/images/flags/at_flag.png",
   );
 
   static const Country AU = Country(
     name: "Australia",
     isoCode: "AU",
     dialingCode: "61",
-    flagSrc: "assets/flags/au_flag.png",
+    flagSrc: "assets/images/flags/au_flag.png",
   );
 
   static const Country BE = Country(
     name: "Belgium",
     isoCode: "BE",
     dialingCode: "32",
-    flagSrc: "assets/flags/be_flag.png",
+    flagSrc: "assets/images/flags/be_flag.png",
   );
 
   static const Country BR = Country(
     name: "Brazil",
     isoCode: "BR",
     dialingCode: "55",
-    flagSrc: "assets/flags/br_flag.png",
+    flagSrc: "assets/images/flags/br_flag.png",
   );
 
   static const Country CU = Country(
     name: "Cuba",
     isoCode: "CU",
     dialingCode: "53",
-    flagSrc: "assets/flags/cu_flag.png",
+    flagSrc: "assets/images/flags/cu_flag.png",
   );
 
   static const Country DE = Country(
-    flagSrc: "assets/flags/de_flag.png",
+    flagSrc: "assets/images/flags/de_flag.png",
     dialingCode: "49",
     isoCode: "DE",
     name: "Germany",
   );
 
   static const Country ES = Country(
-    flagSrc: "assets/flags/es_flag.png",
+    flagSrc: "assets/images/flags/es_flag.png",
     dialingCode: "34",
     isoCode: "ES",
     name: "Spain",
