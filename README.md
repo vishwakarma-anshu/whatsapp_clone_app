@@ -9,8 +9,8 @@ The project is to create a clone of WhatsApp using Flutter.
   - [x] Provide Privacy Policy and Terms of Service, on clicking respective highlighted text.
   - [x] On clicking "accept and continue", send user to authentication page
 - [ ] **Authentication**
-  - [ ] **Phone Number Input**
-  - [ ] **Phone Number Confirmation Dialog**
+  - [x] **Phone Number Input**
+  - [x] **Phone Number Confirmation Dialog**
   - [ ] **OTP Input**
   - [ ] _(Optional)_ **Restoration Option**
   - [ ] **Profile Info**
