@@ -12,6 +12,9 @@ dependencies:
 
   cupertino_icons: ^0.1.3
 
+  # To show toast in app
+  fluttertoast: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -21,3 +24,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/flags/

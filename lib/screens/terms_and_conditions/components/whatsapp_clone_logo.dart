@@ -27,23 +27,21 @@ class WhatsAppCloneLogo extends StatelessWidget {
               color: MyColors.white,
               borderRadius: BorderRadius.circular(10.0),
             ),
-            child: SizedBox(
-              // height: 30.0,
-              // width: 65.0,
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 9.0),
-                  decoration: BoxDecoration(
-                      color: MyColors.lightGreen,
-                      borderRadius: BorderRadius.circular(5.0)),
-                  child: Text(
-                    'Clone',
-                    style: TextStyle(
-                      color: MyColors.white,
-                      fontSize: 15.0,
-                      letterSpacing: 1.0,
-                      fontWeight: FontWeight.w600,
-                    ),
+            child: Center(
+              child: Container(
+                height: 33.0,
+                width: 63.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: MyColors.lightGreen,
+                    borderRadius: BorderRadius.circular(10.0)),
+                child: Text(
+                  'Clone',
+                  style: TextStyle(
+                    color: MyColors.white,
+                    fontSize: 15.0,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

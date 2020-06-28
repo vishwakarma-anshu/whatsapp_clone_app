@@ -49,7 +49,7 @@ class _PolicyAndTermsTextState extends State<PolicyAndTermsText> {
                   softWrap: true,
                 ),
                 Text(
-                  '\nThe app is just a way to improve my flutter app developing skills. The code for the app is available on GitHub at https://github.com/vishwakarma-anshu/flutter-projects.',
+                  '\nThe app is just a way to improve my flutter app developing skills. The code for the app is available on GitHub at https://github.com/vishwakarma-anshu/',
                   softWrap: true,
                 ),
               ],
