@@ -36,7 +36,7 @@ The project is to create a clone of WhatsApp using Flutter.
 <p>
   <img src="./screenshots/flutter_01.png" width="250" alt="Terms & Condition Screen">
   <img src="./screenshots/flutter_02.png" width="250" alt="PhoneNumber Input Screen">
-  <img src="./screenshots/flutter_03.png" width="250" alt="Number Confirmation Dialogbox>
+  <img src="./screenshots/flutter_03.png" width="250" alt="Number Confirmation Dialogbox">
 </p>
 
 ## Note
