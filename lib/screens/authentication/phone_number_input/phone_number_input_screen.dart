@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:whatsapp_clone_app/utils/phone_number_formatter.dart';
 
-import '../../../components/country_code_list.dart';
-import '../../../models/country.dart';
+import '../../../components/country_code_and_phone_number_widget.dart';
 import '../../../my_colors.dart';
+import '../otp_input/otp_input_screen.dart';
 import 'components/help_popup_menu_button.dart';
 import 'components/helper_text_widget.dart';
 
@@ -14,80 +12,50 @@ class PhoneNumberInputScreen extends StatefulWidget {
 }
 
 class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
-  TextEditingController _countryController;
-  TextEditingController _codeController;
-  TextEditingController _phoneNumberController;
+  TextEditingController countryController;
+  TextEditingController codeController;
+  TextEditingController phoneNumberController;
 
-  FocusNode _codeFocusNode;
-  FocusNode _phoneNumberFocusNode;
-
-  double _countryBorderWidth = 1.2;
-  double _codeBorderWidth = 1.2;
+  FocusNode codeFocusNode;
+  FocusNode phoneNumberFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _countryController = TextEditingController(text: 'Choose a country');
-    _codeController = TextEditingController();
-    _phoneNumberController = TextEditingController();
+    countryController = TextEditingController(text: 'Choose a country');
+    codeController = TextEditingController();
+    phoneNumberController = TextEditingController();
 
-    _codeFocusNode = FocusNode();
-    _phoneNumberFocusNode = FocusNode();
+    codeFocusNode = FocusNode();
+    phoneNumberFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
-    _countryController.dispose();
-    _codeController.dispose();
-    _phoneNumberController.dispose();
+    countryController.dispose();
+    codeController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
 
-  void _updateCodeAndCountry(dynamic element) {
-    if (element != null) {
-      if (element is Country) {
-        _countryController.text = element.name;
-        _codeController.text = element.dialingCode;
-
-        FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
-      } else {
-        if (element == '') {
-          _countryController.text = 'Choose a country';
-          setState(() {});
-          return;
-        }
-        int index = countries
-            .indexWhere((Country country) => country.dialingCode == element);
-        if (index != -1) {
-          _countryController.text = countries[index].name;
-
-          FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
-        } else {
-          _countryController.text = 'invalid country code';
-          setState(() {});
-        }
-      }
-    }
-  }
-
   bool validateCodeAndPhoneNumber(BuildContext context) {
-    String code = _codeController.text;
-    String country = _countryController.text;
-    String phoneNumber = _phoneNumberController.text;
+    String code = codeController.text;
+    String country = countryController.text;
+    String phoneNumber = phoneNumberController.text;
     if (code == '') {
       _showDialog('Invalid country code length (1-3 digits only).');
-      FocusScope.of(context).requestFocus(_codeFocusNode);
+      FocusScope.of(context).requestFocus(codeFocusNode);
     } else if (country == 'invalid country code') {
       _showDialog('invalid code country');
-      _codeController.text = '';
-      FocusScope.of(context).requestFocus(_codeFocusNode);
+      codeController.text = '';
+      FocusScope.of(context).requestFocus(codeFocusNode);
     } else if (phoneNumber == '') {
       _showDialog('Please enter your phone number');
-      FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+      FocusScope.of(context).requestFocus(phoneNumberFocusNode);
     } else if (phoneNumber.length < 10) {
       _showDialog(
           'The phone number you entered is too short for the country: India.\n\nInclude your area code if you haven\'t.');
-      FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+      FocusScope.of(context).requestFocus(phoneNumberFocusNode);
     } else {
       return true;
     }
@@ -131,137 +99,13 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
             SizedBox(height: 12.0),
             HelperTextWidget(),
             SizedBox(height: 12.0),
-            Container(
-              // color: Colors.grey.shade100,
-              width: size.width * 0.7,
-              child: Column(
-                children: <Widget>[
-                  Focus(
-                    onFocusChange: (bool hasFocus) {
-                      if (hasFocus) {
-                        _countryBorderWidth = 1.8;
-                      } else {
-                        _countryBorderWidth = 1.2;
-                      }
-                    },
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Icon(
-                            Icons.pie_chart_outlined,
-                            color: Colors.transparent,
-                          ), // the icon is just to center the textfeild
-                          Expanded(
-                            child: TextField(
-                              readOnly: true,
-                              controller: _countryController,
-                              textAlign: TextAlign.center,
-                              textAlignVertical: TextAlignVertical.bottom,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                border: UnderlineInputBorder(
-                                    borderSide: BorderSide.none),
-                              ),
-                              onTap: () async {
-                                Country country = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CountryCodeList(),
-                                  ),
-                                );
-                                _updateCodeAndCountry(country);
-                              },
-                            ),
-                          ),
-                          Icon(Icons.arrow_drop_down)
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: _countryBorderWidth,
-                            color: MyColors.lightTealGreen,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: Focus(
-                          onFocusChange: (bool hasFocus) {
-                            if (hasFocus) {
-                              _codeBorderWidth = 1.8;
-                              setState(() {});
-                            } else {
-                              _codeBorderWidth = 1.2;
-                              setState(() {});
-                            }
-                          },
-                          child: Container(
-                            child: Row(
-                              children: <Widget>[
-                                Icon(Icons.add, size: 12.0),
-                                Expanded(
-                                  child: TextField(
-                                    autofocus: true,
-                                    controller: _codeController,
-                                    focusNode: _codeFocusNode,
-                                    textAlign: TextAlign.center,
-                                    maxLength: 3,
-                                    keyboardType: TextInputType.phone,
-                                    textAlignVertical: TextAlignVertical.bottom,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      counterText: '',
-                                      border: InputBorder.none,
-                                    ),
-                                    onChanged: (String value) {
-                                      _updateCodeAndCountry(value);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  width: _codeBorderWidth,
-                                  color: MyColors.lightTealGreen,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 12.0),
-                      Expanded(
-                        flex: 5,
-                        child: TextField(
-                          controller: _phoneNumberController,
-                          focusNode: _phoneNumberFocusNode,
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: <TextInputFormatter>[
-                            WhitelistingTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(15),
-                            PhoneNumberFormatter(),
-                          ],
-                          textAlignVertical: TextAlignVertical.bottom,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: 'phone number',
-                          ),
-                          onChanged: (String value) {},
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            CountryCodeAndPhoneNumberWidget(
+              size: size,
+              countryController: countryController,
+              codeController: codeController,
+              codeFocusNode: codeFocusNode,
+              phoneNumberController: phoneNumberController,
+              phoneNumberFocusNode: phoneNumberFocusNode,
             ),
             SizedBox(height: 18.0),
             Text(
@@ -278,7 +122,12 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
               child: Text('Next'.toUpperCase()),
               onPressed: () {
                 bool result = validateCodeAndPhoneNumber(context);
-                if (result) {}
+                if (result) {
+                  String code = codeController.text;
+                  String phoneNumber = phoneNumberController.text;
+                  print('+$code $phoneNumber');
+                  _showConfirmationDialog('+$code $phoneNumber', context);
+                }
               },
             ),
             SizedBox(height: 18.0)
@@ -305,6 +154,73 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
       actions: <Widget>[
         HelpPopupMenuButton(),
       ],
+    );
+  }
+
+  void _showConfirmationDialog(String phoneNumber, BuildContext ctx) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: 'We will be verifying the phone number: \n\n'),
+                    TextSpan(
+                        text: phoneNumber,
+                        style: TextStyle(fontWeight: FontWeight.w600)),
+                    TextSpan(
+                        text:
+                            '\n\nIs this OK, or would you like to edit the number?'),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24.0),
+              Row(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      FocusScope.of(ctx).requestFocus(phoneNumberFocusNode);
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Edit',
+                      style:
+                          TextStyle(fontSize: 14.0, color: MyColors.lightGreen),
+                    ),
+                  ),
+                  Spacer(),
+                  InkWell(
+                    onTap: () {
+                      if (phoneNumber != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OtpInputScreen(phoneNumber: phoneNumber),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      'OK',
+                      style:
+                          TextStyle(fontSize: 14.0, color: MyColors.lightGreen),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
