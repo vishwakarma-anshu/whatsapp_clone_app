@@ -70,36 +70,69 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
     }
   }
 
+  bool validateCodeAndPhoneNumber(BuildContext context) {
+    String code = _codeController.text;
+    String country = _countryController.text;
+    String phoneNumber = _phoneNumberController.text;
+    if (code == '') {
+      _showDialog('Invalid country code length (1-3 digits only).');
+      FocusScope.of(context).requestFocus(_codeFocusNode);
+    } else if (country == 'invalid country code') {
+      _showDialog('invalid code country');
+      _codeController.text = '';
+      FocusScope.of(context).requestFocus(_codeFocusNode);
+    } else if (phoneNumber == '') {
+      _showDialog('Please enter your phone number');
+      FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+    } else if (phoneNumber.length < 10) {
+      _showDialog(
+          'The phone number you entered is too short for the country: India.\n\nInclude your area code if you haven\'t.');
+      FocusScope.of(context).requestFocus(_phoneNumberFocusNode);
+    } else {
+      return true;
+    }
+    // if()
+
+    return false;
+  }
+
+  void _showDialog(String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 24.0),
+          contentPadding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          content: Text(content),
+          actions: <Widget>[
+            FlatButton(
+              textColor: MyColors.lightGreen,
+              child: Text('ok'.toUpperCase()),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: MyColors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: Container(),
-        title: FittedBox(
-          child: Text(
-            'Enter you phone number',
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(color: MyColors.lightTealGreen),
-          ),
-        ),
-        actions: <Widget>[
-          HelpPopupMenuButton(),
-        ],
-      ),
+      appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             SizedBox(height: 12.0),
             HelperTextWidget(),
+            SizedBox(height: 12.0),
             Container(
-              color: Colors.grey.shade100,
+              // color: Colors.grey.shade100,
               width: size.width * 0.7,
               child: Column(
                 children: <Widget>[
@@ -175,6 +208,7 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                                 Icon(Icons.add, size: 12.0),
                                 Expanded(
                                   child: TextField(
+                                    autofocus: true,
                                     controller: _codeController,
                                     focusNode: _codeFocusNode,
                                     textAlign: TextAlign.center,
@@ -206,31 +240,71 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                       ),
                       SizedBox(width: 12.0),
                       Expanded(
-                          flex: 5,
-                          child: TextField(
-                            controller: _phoneNumberController,
-                            focusNode: _phoneNumberFocusNode,
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: <TextInputFormatter>[
-                              LengthLimitingTextInputFormatter(15),
-                              PhoneNumberFormatter(),
-                              // TODO: The PhoneNumberFormatter() is giving some problems
-                              // TODO: The Terms&Condition Page shows Overflow error if keyboard gets displayed on it.
-                            ],
-                            textAlignVertical: TextAlignVertical.bottom,
-                            decoration: InputDecoration(
-                                isDense: true, hintText: 'phone number'
-                                // border: InputBorder.none,
-                                ),
-                          )),
+                        flex: 5,
+                        child: TextField(
+                          controller: _phoneNumberController,
+                          focusNode: _phoneNumberFocusNode,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(15),
+                            PhoneNumberFormatter(),
+                          ],
+                          textAlignVertical: TextAlignVertical.bottom,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: 'phone number',
+                          ),
+                          onChanged: (String value) {},
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 18.0),
+            Text(
+              'Carrier SMS Charges may apply',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: Colors.grey),
+            ),
+            Spacer(),
+            FlatButton(
+              color: MyColors.lightGreen,
+              textColor: Colors.white,
+              child: Text('Next'.toUpperCase()),
+              onPressed: () {
+                bool result = validateCodeAndPhoneNumber(context);
+                if (result) {}
+              },
+            ),
+            SizedBox(height: 18.0)
           ],
         ),
       ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      leading: Container(),
+      title: FittedBox(
+        child: Text(
+          'Enter you phone number',
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(color: MyColors.lightTealGreen),
+        ),
+      ),
+      actions: <Widget>[
+        HelpPopupMenuButton(),
+      ],
     );
   }
 }

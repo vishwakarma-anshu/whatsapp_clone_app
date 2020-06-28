@@ -4,7 +4,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    var text = newValue.text;
+    var text = newValue.text.trim();
 
     if (newValue.selection.baseOffset == 0) {
       return newValue;
@@ -14,7 +14,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
     for (int i = 0; i < text.length; i++) {
       buffer.write(text[i]);
       var nonZeroIndex = i + 1;
-      if (nonZeroIndex != text.length && nonZeroIndex % 5 == 0) {
+      if (nonZeroIndex % 5 == 0 && nonZeroIndex != text.length) {
         buffer.write(' ');
       }
     }

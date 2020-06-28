@@ -12,6 +12,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: MyColors.white,
       body: SafeArea(
         child: Column(
