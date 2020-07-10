@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../components/country_code_and_phone_number_widget.dart';
 import '../../../my_colors.dart';
 import '../otp_input/otp_input_screen.dart';
-import 'components/help_popup_menu_button.dart';
-import 'components/helper_text_widget.dart';
+import '../../../components/help_popup_menu_button.dart';
+import 'components/phone_number_helper_text_widget.dart';
 
 class PhoneNumberInputScreen extends StatefulWidget {
   @override
@@ -97,7 +97,7 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 12.0),
-            HelperTextWidget(),
+            PhoneNumberHelperTextWidget(),
             SizedBox(height: 12.0),
             CountryCodeAndPhoneNumberWidget(
               size: size,
@@ -200,6 +200,7 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                   InkWell(
                     onTap: () {
                       if (phoneNumber != null) {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -8,4 +8,6 @@ class MyColors {
   static const Color outgoingChatBubble = Color(0xFFDCF8C6);
   static const Color lightSkyBlue = Color(0xFF34B7F1);
   static const Color chatBackground = Color(0xFFECE5DD);
+
+  static const Color disabledColor = Color(0xFFBDBDBD);
 }

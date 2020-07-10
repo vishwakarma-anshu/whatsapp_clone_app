@@ -4,16 +4,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../my_colors.dart';
 
-class HelperTextWidget extends StatefulWidget {
-  const HelperTextWidget({
+class PhoneNumberHelperTextWidget extends StatefulWidget {
+  const PhoneNumberHelperTextWidget({
     Key key,
   }) : super(key: key);
 
   @override
-  _HelperTextWidgetState createState() => _HelperTextWidgetState();
+  _PhoneNumberHelperTextWidgetState createState() =>
+      _PhoneNumberHelperTextWidgetState();
 }
 
-class _HelperTextWidgetState extends State<HelperTextWidget> {
+class _PhoneNumberHelperTextWidgetState
+    extends State<PhoneNumberHelperTextWidget> {
   TapGestureRecognizer _tapGestureRecognizer;
 
   @override
