@@ -204,8 +204,9 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                OtpInputScreen(phoneNumber: phoneNumber),
+                            builder: (context) => OtpInputScreen(
+                              phoneNumber: phoneNumber,
+                            ),
                           ),
                         );
                       }

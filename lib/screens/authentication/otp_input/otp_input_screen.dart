@@ -3,8 +3,9 @@ import 'package:whatsapp_clone_app/screens/authentication/otp_input/components/o
 
 import '../../../components/help_popup_menu_button.dart';
 import '../../../my_colors.dart';
+import 'components/otp_text_field.dart';
 
-class OtpInputScreen extends StatelessWidget {
+class OtpInputScreen extends StatefulWidget {
   final String phoneNumber;
 
   const OtpInputScreen({
@@ -12,6 +13,14 @@ class OtpInputScreen extends StatelessWidget {
     @required this.phoneNumber,
   })  : assert(phoneNumber != null),
         super(key: key);
+
+  @override
+  _OtpInputScreenState createState() => _OtpInputScreenState();
+}
+
+class _OtpInputScreenState extends State<OtpInputScreen> {
+  String errorText =
+      'The code you entered is incorrent.\nPlease try again in 2 seconds.';
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +31,16 @@ class OtpInputScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             SizedBox(height: 12.0),
-            OTPHelperTextWidget(phoneNumber: phoneNumber),
-            SizedBox(height: 12.0),
-            Container(
-              height: 30.0,
-              width: 150.0,
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  hintText: '--- ---',
-                  hintStyle: TextStyle(
-                      // fontSize: 50.0,
-                      // height: 30.0,
-                      ),
-                ),
-              ),
+            OTPHelperTextWidget(phoneNumber: widget.phoneNumber),
+            SizedBox(height: 18.0),
+            OTPTextField(
+              hintSymbol: '\u2014',
+              onChanged: (String value) {
+                print(value);
+              },
+              onCompleted: (String value) {
+                print('Verifing the otp...');
+              },
             ),
             SizedBox(height: 12.0),
             Text(
@@ -82,7 +86,7 @@ class OtpInputScreen extends StatelessWidget {
       leading: Container(),
       title: FittedBox(
         child: Text(
-          'Verify $phoneNumber',
+          'Verify ${widget.phoneNumber}',
           style: Theme.of(context)
               .textTheme
               .headline6
