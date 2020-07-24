@@ -6,14 +6,17 @@ The project is to create a clone of WhatsApp using Flutter.
 
 - [x] **Terms & Conditions**
   - [ ] Should only appear when user is logged out or new to the app.
-  - [x] Provide Privacy Policy and Terms of Service, on clicking respective highlighted text.
+  - [x] Provide Privacy Policy and Terms of Service,
+   on clicking respective highlighted text.
   - [x] On clicking "accept and continue", send user to authentication page
 - [ ] **Authentication**
   - [x] **Phone Number Input**
   - [x] **Phone Number Confirmation Dialog**
-  - [ ] **OTP Input**
+  - [x] **OTP Input**
   - [ ] _(Optional)_ **Restoration Option**
+  - [x] **Phone Number Verification**
   - [ ] **Profile Info**
+  - [ ] **Add User to Database**
 - [ ] _(Optional)_ **Two Step Verification**
 - [ ] **Intialization Animation**
 - [ ] **Home Screen**
@@ -37,6 +40,7 @@ The project is to create a clone of WhatsApp using Flutter.
   <img src="./screenshots/flutter_01.png" width="250" alt="Terms & Condition Screen">
   <img src="./screenshots/flutter_02.png" width="250" alt="PhoneNumber Input Screen">
   <img src="./screenshots/flutter_03.png" width="250" alt="Number Confirmation Dialogbox">
+  <img src="./screenshots/flutter_04.png" width="250" alt="OTP Input Screen">
 </p>
 
 ## Note

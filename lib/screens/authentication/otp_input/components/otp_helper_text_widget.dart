@@ -1,19 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../../my_colors.dart';
+import '../../../../utils/export_utils.dart';
 
-class HelperTextWidget extends StatefulWidget {
-  const HelperTextWidget({
+class OTPHelperTextWidget extends StatefulWidget {
+  final String phoneNumber;
+  const OTPHelperTextWidget({
     Key key,
+    @required this.phoneNumber,
   }) : super(key: key);
 
   @override
-  _HelperTextWidgetState createState() => _HelperTextWidgetState();
+  _OTPHelperTextWidgetState createState() => _OTPHelperTextWidgetState();
 }
 
-class _HelperTextWidgetState extends State<HelperTextWidget> {
+class _OTPHelperTextWidgetState extends State<OTPHelperTextWidget> {
   TapGestureRecognizer _tapGestureRecognizer;
 
   @override
@@ -21,12 +22,7 @@ class _HelperTextWidgetState extends State<HelperTextWidget> {
     super.initState();
     _tapGestureRecognizer = TapGestureRecognizer()
       ..onTap = () {
-        Fluttertoast.showToast(
-          msg:
-              'Unable to get phone number from SIM. Please type in your phone number.',
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_SHORT,
-        );
+        Navigator.pop(context);
       };
   }
 
@@ -39,18 +35,22 @@ class _HelperTextWidgetState extends State<HelperTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 19.0),
+      padding: EdgeInsets.symmetric(horizontal: 24),
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
           style: TextStyle(
             color: Colors.black,
+            height: 1.4,
           ),
-          text:
-              'WhatsApp clone wil send an SMS message to verify your phone number. ',
+          text: 'Waiting to automatically detect an SMS send to ',
           children: <TextSpan>[
             TextSpan(
-              text: 'What\'s my number ?',
+              text: '${widget.phoneNumber}. ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              text: 'Wrong number ?',
               style: TextStyle(color: MyColors.lightSkyBlue),
               recognizer: _tapGestureRecognizer,
             ),

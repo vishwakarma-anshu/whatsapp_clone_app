@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
+
+import '../../../utils/export_utils.dart';
 
 class HeadingText extends StatelessWidget {
   const HeadingText({

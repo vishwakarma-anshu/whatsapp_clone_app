@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
+
+import '../../../utils/export_utils.dart';
 
 class PolicyAndTermsText extends StatefulWidget {
   const PolicyAndTermsText({

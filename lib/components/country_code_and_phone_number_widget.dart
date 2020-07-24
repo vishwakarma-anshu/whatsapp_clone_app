@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:whatsapp_clone_app/utils/my_colors.dart';
 
 import '../models/country.dart';
-import '../my_colors.dart';
 import '../utils/phone_number_formatter.dart';
 import 'country_code_list.dart';
 
