@@ -45,3 +45,4 @@ app.*.map.json
 
 # Design Templates
 design_templates/
+android/app/google-services.json

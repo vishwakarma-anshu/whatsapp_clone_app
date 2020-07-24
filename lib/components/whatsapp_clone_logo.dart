@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone_app/my_colors.dart';
+import 'package:whatsapp_clone_app/utils/my_colors.dart';
 
 class WhatsAppCloneLogo extends StatelessWidget {
   const WhatsAppCloneLogo({

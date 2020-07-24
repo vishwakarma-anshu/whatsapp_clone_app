@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../my_colors.dart';
+import '../../components/whatsapp_clone_logo.dart';
+import '../../utils/export_utils.dart';
 import '../authentication/phone_number_input/phone_number_input_screen.dart';
 import 'components/heading_text.dart';
 import 'components/policy_and_terms_text.dart';
-import 'components/whatsapp_clone_logo.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
   @override

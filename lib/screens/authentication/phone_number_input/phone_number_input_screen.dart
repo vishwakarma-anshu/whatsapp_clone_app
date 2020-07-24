@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/country_code_and_phone_number_widget.dart';
-import '../../../my_colors.dart';
-import '../otp_input/otp_input_screen.dart';
 import '../../../components/help_popup_menu_button.dart';
+import '../../../utils/export_utils.dart';
+import '../otp_input/otp_input_screen.dart';
+import '../profile_info/profile_info_screen.dart';
 import 'components/phone_number_helper_text_widget.dart';
 
 class PhoneNumberInputScreen extends StatefulWidget {
@@ -43,18 +45,20 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
     String country = countryController.text;
     String phoneNumber = phoneNumberController.text;
     if (code == '') {
-      _showDialog('Invalid country code length (1-3 digits only).');
+      showCustomDialog(
+          'Invalid country code length (1-3 digits only).', context);
       FocusScope.of(context).requestFocus(codeFocusNode);
     } else if (country == 'invalid country code') {
-      _showDialog('invalid code country');
+      showCustomDialog('invalid code country', context);
       codeController.text = '';
       FocusScope.of(context).requestFocus(codeFocusNode);
     } else if (phoneNumber == '') {
-      _showDialog('Please enter your phone number');
+      showCustomDialog('Please enter your phone number', context);
       FocusScope.of(context).requestFocus(phoneNumberFocusNode);
     } else if (phoneNumber.length < 10) {
-      _showDialog(
-          'The phone number you entered is too short for the country: India.\n\nInclude your area code if you haven\'t.');
+      showCustomDialog(
+          'The phone number you entered is too short for the country: India.\n\nInclude your area code if you haven\'t.',
+          context);
       FocusScope.of(context).requestFocus(phoneNumberFocusNode);
     } else {
       return true;
@@ -64,35 +68,13 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
     return false;
   }
 
-  void _showDialog(String content) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: EdgeInsets.symmetric(horizontal: 24.0),
-          contentPadding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-          content: Text(content),
-          actions: <Widget>[
-            FlatButton(
-              textColor: MyColors.lightGreen,
-              child: Text('ok'.toUpperCase()),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: MyColors.white,
-      appBar: _buildAppBar(context),
+      appBar: buildAppBar(context),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -126,7 +108,8 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                   String code = codeController.text;
                   String phoneNumber = phoneNumberController.text;
                   print('+$code $phoneNumber');
-                  _showConfirmationDialog('+$code $phoneNumber', context);
+                  phoneNumberFocusNode.unfocus();
+                  _showConfirmationDialog(code, phoneNumber, context);
                 }
               },
             ),
@@ -137,7 +120,7 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -157,7 +140,8 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
     );
   }
 
-  void _showConfirmationDialog(String phoneNumber, BuildContext ctx) {
+  void _showConfirmationDialog(
+      String countryCode, String phoneNumber, BuildContext ctx) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -174,7 +158,7 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
                     TextSpan(
                         text: 'We will be verifying the phone number: \n\n'),
                     TextSpan(
-                        text: phoneNumber,
+                        text: '+$countryCode $phoneNumber',
                         style: TextStyle(fontWeight: FontWeight.w600)),
                     TextSpan(
                         text:
@@ -185,37 +169,24 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
               SizedBox(height: 24.0),
               Row(
                 children: <Widget>[
-                  InkWell(
+                  alertBoxButton(
+                    label: 'Edit',
                     onTap: () {
                       FocusScope.of(ctx).requestFocus(phoneNumberFocusNode);
                       Navigator.pop(context);
                     },
-                    child: Text(
-                      'Edit',
-                      style:
-                          TextStyle(fontSize: 14.0, color: MyColors.lightGreen),
-                    ),
                   ),
                   Spacer(),
-                  InkWell(
+                  alertBoxButton(
+                    label: 'Ok',
                     onTap: () {
-                      if (phoneNumber != null) {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OtpInputScreen(
-                              phoneNumber: phoneNumber,
-                            ),
-                          ),
-                        );
-                      }
+                      Navigator.pop(context);
+                      verifyPhoneNumber(
+                        countryCode: countryCode,
+                        phoneNumber: phoneNumber,
+                        context: ctx,
+                      );
                     },
-                    child: Text(
-                      'OK',
-                      style:
-                          TextStyle(fontSize: 14.0, color: MyColors.lightGreen),
-                    ),
                   ),
                 ],
               )
@@ -225,4 +196,63 @@ class _PhoneNumberInputScreenState extends State<PhoneNumberInputScreen> {
       },
     );
   }
+
+  InkWell alertBoxButton({String label, Function onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        child: Text(
+          label,
+          style: TextStyle(fontSize: 14.0, color: MyColors.lightGreen),
+        ),
+      ),
+    );
+  }
+}
+
+void verifyPhoneNumber({
+  @required String countryCode,
+  @required String phoneNumber,
+  @required BuildContext context,
+}) {
+  void verified(AuthCredential credential) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileInfoScreen(
+          credential: credential,
+          countryCode: countryCode,
+          phoneNumber: phoneNumber,
+        ),
+      ),
+    );
+  }
+
+  void failed(AuthException exception) {
+    String content = exception.message;
+    showCustomDialog(content, context);
+  }
+
+  void otpSend(String verificationId, [int forcedSms]) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtpInputScreen(
+          verificationId: verificationId,
+          countryCode: countryCode,
+          phoneNumber: phoneNumber,
+        ),
+      ),
+    );
+  }
+
+  FirebaseAuth.instance.verifyPhoneNumber(
+    phoneNumber: '+$countryCode $phoneNumber',
+    timeout: Duration(seconds: 30),
+    verificationCompleted: verified,
+    verificationFailed: failed,
+    codeSent: otpSend,
+    codeAutoRetrievalTimeout: null,
+  );
 }

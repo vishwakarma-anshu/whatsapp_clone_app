@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../my_colors.dart';
+import '../../../../utils/export_utils.dart';
 
 class OTPTextField extends StatefulWidget {
   final String hintSymbol;
   final int digits;
   final bool obscureText;
+  final List<TextEditingController> otpDigitControllers;
+  final List<FocusNode> otpFocusNodes;
   final ValueChanged<String> onChanged;
   final ValueChanged<String> onCompleted;
 
@@ -14,6 +16,8 @@ class OTPTextField extends StatefulWidget {
     Key key,
     this.hintSymbol = '\u2014',
     this.digits = 6,
+    this.otpDigitControllers,
+    this.otpFocusNodes,
     this.obscureText = false,
     this.onChanged,
     this.onCompleted,
@@ -27,15 +31,13 @@ class _OTPTextFieldState extends State<OTPTextField> {
   List<FocusNode> _focusNodes;
   List<TextEditingController> _textEditingControllers;
 
-  List<String> _pin;
-
   @override
   void initState() {
     super.initState();
-    _focusNodes = List<FocusNode>(widget.digits);
-    _textEditingControllers = List<TextEditingController>(widget.digits);
+    _textEditingControllers = widget.otpDigitControllers ??
+        List<TextEditingController>(widget.digits);
 
-    _pin = List.generate(widget.digits, (int index) => '');
+    _focusNodes = widget.otpFocusNodes ?? List<FocusNode>(widget.digits);
   }
 
   @override
@@ -94,10 +96,6 @@ class _OTPTextFieldState extends State<OTPTextField> {
                   isDense: true,
                 ),
                 onChanged: (value) {
-                  setState(() {
-                    _pin[_index] = value;
-                  });
-
                   if (value.isNotEmpty && _index + 1 != widget.digits) {
                     _focusNodes[_index].unfocus();
                     FocusScope.of(context)
@@ -109,18 +107,13 @@ class _OTPTextFieldState extends State<OTPTextField> {
                     _focusNodes[_index - 1].requestFocus();
                   }
 
-                  String currentPin = '';
-                  _pin.forEach((String digit) {
-                    currentPin = currentPin + digit;
-                  });
+                  _generateCurrentPin();
 
-                  if (!_pin.contains(null) &&
-                      !_pin.contains('') &&
-                      currentPin.length == widget.digits) {
-                    widget.onCompleted(currentPin);
+                  if (_generateCurrentPin().length == widget.digits) {
+                    widget.onCompleted(_generateCurrentPin());
                   }
 
-                  widget.onChanged(currentPin);
+                  widget.onChanged(_generateCurrentPin());
                 },
               ),
             );
@@ -128,5 +121,15 @@ class _OTPTextFieldState extends State<OTPTextField> {
         ),
       ),
     );
+  }
+
+  String _generateCurrentPin() {
+    String _currentPin = '';
+
+    _textEditingControllers.forEach((controller) {
+      _currentPin = _currentPin + controller.text;
+    });
+
+    return _currentPin;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../../../../my_colors.dart';
+
+import '../../../../utils/export_utils.dart';
 
 class OTPHelperTextWidget extends StatefulWidget {
   final String phoneNumber;

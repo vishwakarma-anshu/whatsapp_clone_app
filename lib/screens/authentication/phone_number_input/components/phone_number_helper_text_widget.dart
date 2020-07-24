@@ -1,8 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../../my_colors.dart';
+import '../../../../utils/export_utils.dart';
 
 class PhoneNumberHelperTextWidget extends StatefulWidget {
   const PhoneNumberHelperTextWidget({
@@ -23,12 +22,8 @@ class _PhoneNumberHelperTextWidgetState
     super.initState();
     _tapGestureRecognizer = TapGestureRecognizer()
       ..onTap = () {
-        Fluttertoast.showToast(
-          msg:
-              'Unable to get phone number from SIM. Please type in your phone number.',
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_SHORT,
-        );
+        showToastMessage(
+            'Unable to get phone number from SIM. Please type in your phone number.');
       };
   }
 
